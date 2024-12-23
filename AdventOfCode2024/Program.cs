@@ -1,10 +1,15 @@
-﻿string[] data = Shared.Files.ReadPerLine($"{Path.Combine(Environment.CurrentDirectory, "part1.txt")}");
+﻿using System.Diagnostics;
 
-// Data will be presented per line, this will need to be put in a sorted list
-List<int> list1 = new();
-List<int> list2 = new();
+Stopwatch stopwatch = new Stopwatch();
+stopwatch.Start();
 
-// Load the data
+string[] data = Shared.Files.ReadPerLine($"{Path.Combine(Environment.CurrentDirectory, "input.txt")}");
+
+// Data will be presented per line, this will need to be put in sorted lists
+List<int> list1 = [];
+List<int> list2 = [];
+
+// Load and parse the data
 foreach (string line in data)
 {
     string[] splitData = line.Trim().Split("   ");
@@ -12,89 +17,56 @@ foreach (string line in data)
     list2.Add(int.Parse(splitData[1]));
 }
 
-// Copy the item count
-int itemCount = list1.Count;
+// Sort the lists upfront to simplify operations
+list1.Sort();
+list2.Sort();
 
-// Distance
-int distance = 0;
+int distancePart1 = CalculateDistancePart1(list1, list2);
+Console.WriteLine($"Part 1: {distancePart1}");
 
-#region Part 2
+int distancePart2 = CalculateDistancePart2(list1, list2);
+Console.WriteLine($"Part 2: {distancePart2}");
 
-distance = FindDistanceMatch(ref list1, ref list2);
-
-Console.WriteLine($"Part 2: {distance}");
-
-#endregion
-
-#region Part 1
-distance = 0;
-// Get the lowest values
-for (int i=0; i < itemCount; i++)
+static int CalculateDistancePart1(List<int> sortedList1, List<int> sortedList2)
 {
-    int a = FindAndRemoveLowest(ref list1);
-    int b = FindAndRemoveLowest(ref list2);
-
-    if (a > b)
-        distance += a - b;
-    else if (b > a)
-        distance += b - a;
-}
-
-Console.WriteLine($"Part 1: {distance}");
-
-#endregion
-
-
-
-static int FindAndRemoveLowest(ref List<int> list)
-{
-    int lowestIndex = -1;
-    int lowestNumber = int.MaxValue;
-
-    for (int i = 0; i < list.Count; i++)
-    {
-        int element = list.ElementAt(i);
-        
-        if (element < lowestNumber)
-        {
-            lowestIndex = i;
-            lowestNumber = element;
-        }
-    }
-
-    if (lowestIndex != -1)
-        list.RemoveAt(lowestIndex);
-
-    return lowestNumber;
-}
-
-static int FindDistanceMatch(ref List<int> listA, ref List<int> listB)
-{
-    Dictionary<int, int> lookupTable = new Dictionary<int, int>();
     int distance = 0;
 
-    for (int i = 0; i < listA.Count; i++)
+    // Since both lists are sorted, directly compute distance
+    for (int i = 0; i < sortedList1.Count; i++)
     {
-        int element = listA.ElementAt(i);
-
-        // Found existing match, no need to loop through
-        if (lookupTable.TryGetValue(element, out int value))
-        {
-            distance += value;
-            continue;
-        }
-
-        int itemCount = 0;
-        for (int j = 0; j < listB.Count; j++)
-        {
-            if (listB.ElementAt(j) == element)
-                itemCount++;
-        }
-
-        lookupTable.Add(element, itemCount);
-        distance += element * itemCount;
+        distance += Math.Abs(sortedList1[i] - sortedList2[i]);
     }
 
     return distance;
 }
 
+static int CalculateDistancePart2(List<int> sortedList1, List<int> sortedList2)
+{
+    int distance = 0;
+    var frequency = new Dictionary<int, int>();
+
+    // Build frequency table for list2
+    foreach (int number in sortedList2)
+    {
+        if (!frequency.ContainsKey(number))
+            frequency[number] = 0;
+
+        frequency[number]++;
+    }
+
+    // Calculate the distance
+    foreach (int number in sortedList1)
+    {
+        if (frequency.TryGetValue(number, out int count) && count > 0)
+        {
+            distance += number * count;
+            frequency[number]--;
+        }
+    }
+
+    return distance;
+}
+
+TimeSpan elapsed = stopwatch.Elapsed;
+
+Console.WriteLine($"Elapsed time: {elapsed.TotalMilliseconds} ms");

@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day1", "AdventOfCode2024\Day1.csproj", "{7A0E11C3-EC14-46DC-AFE5-85516DA79635}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{CEE03A1B-1AF1-4414-975C-B45FF7FE37C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day 2", "Day 2\Day 2.csproj", "{A65D2FDB-5F5C-414F-A7A1-FAC6A4AA4467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CEE03A1B-1AF1-4414-975C-B45FF7FE37C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEE03A1B-1AF1-4414-975C-B45FF7FE37C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEE03A1B-1AF1-4414-975C-B45FF7FE37C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A65D2FDB-5F5C-414F-A7A1-FAC6A4AA4467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A65D2FDB-5F5C-414F-A7A1-FAC6A4AA4467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A65D2FDB-5F5C-414F-A7A1-FAC6A4AA4467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A65D2FDB-5F5C-414F-A7A1-FAC6A4AA4467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
